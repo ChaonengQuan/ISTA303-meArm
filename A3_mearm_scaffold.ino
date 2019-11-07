@@ -150,6 +150,6 @@ void loop() {
 //  moveGripper(moveToGripper);  
 //    LEFT.write(30);
 //    RIGHT.write(135);
-moveLeft(30);
-moveRight(135);
+    moveLeft(30);
+    moveRight(135);
 }
