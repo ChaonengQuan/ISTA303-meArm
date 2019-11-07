@@ -116,6 +116,16 @@ void doSerialConsole() {
   }    
 }
 
+void moveLeft(int angle) {
+    offset = (angle - 45) * 2;
+    LEFT.write(angle + offset);
+}
+
+void moveRight(int angle) {
+    offset = (angle - 90) * 2;
+    RIGHT.write(angle + offset);
+}
+
 void loop() {
   
 //  // Step 1: Display Serial console
@@ -138,8 +148,8 @@ void loop() {
 //  moveTheta(moveToTheta);
 //  moveRZ(moveToR, moveToZ);
 //  moveGripper(moveToGripper);  
-    LEFT.write(30);
-    RIGHT.write(135);
-
-
+//    LEFT.write(30);
+//    RIGHT.write(135);
+moveLeft(30);
+moveRight(135);
 }
