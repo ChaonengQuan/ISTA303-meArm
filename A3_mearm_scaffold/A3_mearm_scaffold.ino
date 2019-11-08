@@ -31,20 +31,42 @@ int moveToGripper   = 0;
 
 // Move the rotational (theta, polar coordinates) axis of the MeArm
 void moveTheta(int angle) {
-  
+  MIDDLE.write(angle);
 }
 
 // Open the gripper a given width/distance
 void moveGripper(int distToOpen) {
-  
+  distToOpen -= 5;
+  int thetaX = (180*distToOpen)/(76+distToOpen);
+  int servo = (100-thetaX)+10;
+  CLAW.write(servo);
 }
 
 // Move the arm along the r axis (polar coordinates), or in height (z)
 void moveRZ(int r, int z) {
-  
+  moveLeft(getAngleW(r,z));
+  moveRight(getAngleBK(r,z));
 }
 
+float getAngleC(int r, int z){
+  int c = sqrt(r*r + z*z);
+  int angleC = (c * 180) / (162 + c);
+  return angleC;
+}
 
+float getAngleW(int r, int z){
+  float C = getAngleC(r,z);
+  float W = -C/2 - atan(r/z)*(2*PI/360) + 90; 
+  Serial.print("angle W is :        ");
+  Serial.println(W);
+  return W;
+}
+
+float getAngleBK(int r, int z){
+  Serial.print("angle BK is :        ");
+  Serial.println(180 - getAngleC(r,z) - getAngleW(r,z));
+  return 180 - getAngleC(r,z) - getAngleW(r,z);
+}
 
 /*
  * Arduino core (setup, loop)
@@ -117,13 +139,13 @@ void doSerialConsole() {
 }
 
 void moveLeft(int angle) {
-    offset = (angle - 45) * 2;
-    LEFT.write(angle + offset);
+    int offset = (angle - 45) * 2;
+    LEFT.write(angle - offset);
 }
 
 void moveRight(int angle) {
-    offset = (angle - 90) * 2;
-    RIGHT.write(angle + offset);
+    int offset = (angle - 90) * 2;
+    RIGHT.write(angle - offset);
 }
 
 void loop() {
@@ -150,6 +172,18 @@ void loop() {
 //  moveGripper(moveToGripper);  
 //    LEFT.write(30);
 //    RIGHT.write(135);
-    moveLeft(30);
-    moveRight(135);
+//    moveLeft(0);
+//    moveRight(90);
+//    moveGripper(70);
+//    //delay(1000);
+//    //CLAW.write(110);
+//    //delay(5000);
+//    //CLAW.write(180);
+//    //delay(400);
+////    Serial.print("Angle C: ");
+////    Serial.println(getAngleC(10,10));
+//    Serial.print("Angle W: ");
+//    Serial.println(getAngleW(10,10));
+  
+ 
 }
