@@ -35,6 +35,7 @@ void moveTheta(int angle) {
 }
 
 // Open the gripper a given width/distance
+// TODO: make this work
 void moveGripper(int distToOpen) {
   distToOpen -= 5;
   int thetaX = (180*distToOpen)/(76+distToOpen);
@@ -44,28 +45,50 @@ void moveGripper(int distToOpen) {
 
 // Move the arm along the r axis (polar coordinates), or in height (z)
 void moveRZ(int r, int z) {
-  moveLeft(getAngleW(r,z));
-  moveRight(getAngleBK(r,z));
+  // calculate stuff in proper order
+  float sideC = getSideC(r, z);
+  float angleK = getAngleK(r, z);
+  float angleB = getAngleB(sideC);
+  float angleC = getAngleC(angleB);
+  float angleW = getAngleW(angleC, angleB, angleK);
+
+  moveLeft(angleW);
+  moveRight(angleB + angleK);
 }
 
-float getAngleC(int r, int z){
-  int c = sqrt(r*r + z*z);
-  int angleC = (c * 180) / (162 + c);
+float getAngleC(float angleB){
+  float angleC = 180 - 2 * angleB; // angleA == angleB
+  //Serial.print("angle C is :        ");
+  //Serial.println(angleC);
   return angleC;
 }
 
-float getAngleW(int r, int z){
-  float C = getAngleC(r,z);
-  float W = -C/2 - atan(r/z)*(2*PI/360) + 90; 
-  Serial.print("angle W is :        ");
-  Serial.println(W);
-  return W;
+float getAngleW(float angleC, float angleB, float angleK){
+  float angleW = 180-angleC-angleB-angleK; 
+  //Serial.print("angle W is :        ");
+  //Serial.println(angleW);
+  return angleW;
 }
 
-float getAngleBK(int r, int z){
-  Serial.print("angle BK is :        ");
-  Serial.println(180 - getAngleC(r,z) - getAngleW(r,z));
-  return 180 - getAngleC(r,z) - getAngleW(r,z);
+float getAngleB(float sideC){
+  float angleB = acos(sideC/2)*(2*PI/360);
+  //Serial.print("angle B is :        ");
+  //Serial.println(angleB);
+  return angleB;
+}
+
+float getSideC (int r, int z){
+  float sideC = sqrt(sq(r) + sq(z));
+  //Serial.print("side c is :        ");
+  //Serial.println(sideC);
+  return sideC;
+}
+
+float getAngleK (int r, int z){
+  float angleK = atan(r/z)*(2*PI/360);
+  //Serial.print("angle K is :        ");
+  //Serial.println(angleK);
+  return angleK;
 }
 
 /*
