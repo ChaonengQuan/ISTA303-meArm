@@ -50,34 +50,38 @@ void moveGripper(int distToOpen) {
  * I added the compressed method below according to my written math steps, not tested.
  * Chaoneng Quan
  */
-
+//
 //void moveRZ(int r, int z) {
 //  int a = 81;
 //  int b = 81;
 //  float lengthOfc = sqrt(sq(r) + sq(z));
-//  float angleOfC = acos( (sq(a) + sq(b) - sq(c))/2*a*b ) * (2*PI/360);
+//  float angleOfC = acos( (sq(a) + sq(b) - sq(lengthOfc))/2*a*b ) * (2*PI/360);
 //  float angleOfB = (180 - angleOfC)/2;
-//  float angleOfK = atan(z/r) * (2*PI/360)
+//  float angleOfK = atan(z/r) * (2*PI/360);
 //  float angleOfW = 180 - angleOfC - (angleOfB + angleOfK);
 //
+//  Serial.print("Angle W = ");
+//  Serial.println(angleOfW);
 //  moveLeft(angleOfW);
+//  Serial.print("Angle B+K = ");
+//  Serial.println(angleOfB + angleOfK);
 //  moveRight(angleOfB + angleOfK);
 //}
 
 
-// Move the arm along the r axis (polar coordinates), or in height (z)
-void moveRZ(int r, int z) {
-  // calculate stuff in proper order
-  float sideC = getSideC(r, z);
-  float angleK = getAngleK(r, z);
-  float angleB = getAngleB(sideC);
-  float angleC = getAngleC(angleB);
-  float angleW = getAngleW(angleC, angleB, angleK);
-
-  moveLeft(angleW);
-  moveRight(angleB + angleK);
-}
-
+//// Move the arm along the r axis (polar coordinates), or in height (z)
+//void moveRZ(int r, int z) {
+//  // calculate stuff in proper order
+//  float sideC = getSideC(r, z);
+//  float angleK = getAngleK(r, z);
+//  float angleB = getAngleB(sideC);
+//  float angleC = getAngleC(angleB);
+//  float angleW = getAngleW(angleC, angleB, angleK);
+//
+//  moveLeft(angleW);
+//  moveRight(angleB + angleK);
+//}
+//
 /*
  * Triangle calculations
  * Refer to kinematics diagram to understand labels
@@ -224,5 +228,7 @@ void loop() {
   // moveTheta(moveToTheta);
   // moveRZ(moveToR, moveToZ);
   // moveGripper(moveToGripper);  
+  moveLeft(20);
+  moveRight(90);
 
 }
