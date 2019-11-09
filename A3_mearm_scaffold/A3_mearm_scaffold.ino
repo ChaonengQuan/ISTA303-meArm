@@ -25,8 +25,11 @@ int moveToR         = 0;
 int moveToZ         = 0;
 int moveToGripper   = 0;
 
+// constants
+const int ARMLEN = 81; // arm is 81mm
+
 /*
- * Functions (
+ * Functions 
  */
 
 // Move the rotational (theta, polar coordinates) axis of the MeArm
@@ -35,7 +38,7 @@ void moveTheta(int angle) {
 }
 
 // Open the gripper a given width/distance
-// TODO: make this work
+// TODO: make this accurate
 void moveGripper(int distToOpen) {
   distToOpen -= 5;
   int thetaX = (180*distToOpen)/(76+distToOpen);
@@ -56,6 +59,11 @@ void moveRZ(int r, int z) {
   moveRight(angleB + angleK);
 }
 
+/*
+ * Triangle calculations
+ * Refer to kinematics diagram to understand labels
+ */
+
 float getAngleC(float angleB){
   float angleC = 180 - 2 * angleB; // angleA == angleB
   //Serial.print("angle C is :        ");
@@ -71,7 +79,8 @@ float getAngleW(float angleC, float angleB, float angleK){
 }
 
 float getAngleB(float sideC){
-  float angleB = acos(sideC/2)*(2*PI/360);
+  // divide triangle in half to get two (identical) right triangles
+  float angleB = acos((sideC/2)/ARMLEN)*(2*PI/360);
   //Serial.print("angle B is :        ");
   //Serial.println(angleB);
   return angleB;
@@ -173,40 +182,25 @@ void moveRight(int angle) {
 
 void loop() {
   
-//  // Step 1: Display Serial console
-//  doSerialConsole();
-//
-//  // Step 2: Debug display
-//  Serial.println("");
-//  Serial.println("Moving to: ");
-//  Serial.print("Theta: ");
-//  Serial.println(moveToTheta);
-//  Serial.print("R: ");
-//  Serial.println(moveToR);
-//  Serial.print("Z: ");
-//  Serial.println(moveToZ);
-//  Serial.print("Gripper: ");
-//  Serial.println(moveToGripper);
-//  
-//
-//  // Step 3: Move to requested location
-//  moveTheta(moveToTheta);
-//  moveRZ(moveToR, moveToZ);
-//  moveGripper(moveToGripper);  
-//    LEFT.write(30);
-//    RIGHT.write(135);
-//    moveLeft(0);
-//    moveRight(90);
-//    moveGripper(70);
-//    //delay(1000);
-//    //CLAW.write(110);
-//    //delay(5000);
-//    //CLAW.write(180);
-//    //delay(400);
-////    Serial.print("Angle C: ");
-////    Serial.println(getAngleC(10,10));
-//    Serial.print("Angle W: ");
-//    Serial.println(getAngleW(10,10));
-  
- 
+  // // Step 1: Display Serial console
+  // doSerialConsole();
+
+  // // Step 2: Debug display
+  // Serial.println("");
+  // Serial.println("Moving to: ");
+  // Serial.print("Theta: ");
+  // Serial.println(moveToTheta);
+  // Serial.print("R: ");
+  // Serial.println(moveToR);
+  // Serial.print("Z: ");
+  // Serial.println(moveToZ);
+  // Serial.print("Gripper: ");
+  // Serial.println(moveToGripper);
+  // 
+
+  // // Step 3: Move to requested location
+  // moveTheta(moveToTheta);
+  // moveRZ(moveToR, moveToZ);
+  // moveGripper(moveToGripper);  
+
 }
