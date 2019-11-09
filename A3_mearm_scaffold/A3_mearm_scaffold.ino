@@ -46,6 +46,25 @@ void moveGripper(int distToOpen) {
   CLAW.write(servo);
 }
 
+/*
+ * I added the compressed method below according to my written math steps, not tested.
+ * Chaoneng Quan
+ */
+
+//void moveRZ(int r, int z) {
+//  int a = 81;
+//  int b = 81;
+//  float lengthOfc = sqrt(sq(r) + sq(z));
+//  float angleOfC = acos( (sq(a) + sq(b) - sq(c))/2*a*b ) * (2*PI/360);
+//  float angleOfB = (180 - angleOfC)/2;
+//  float angleOfK = atan(z/r) * (2*PI/360)
+//  float angleOfW = 180 - angleOfC - (angleOfB + angleOfK);
+//
+//  moveLeft(angleOfW);
+//  moveRight(angleOfB + angleOfK);
+//}
+
+
 // Move the arm along the r axis (polar coordinates), or in height (z)
 void moveRZ(int r, int z) {
   // calculate stuff in proper order
@@ -99,6 +118,9 @@ float getAngleK (int r, int z){
   //Serial.println(angleK);
   return angleK;
 }
+
+
+
 
 /*
  * Arduino core (setup, loop)
