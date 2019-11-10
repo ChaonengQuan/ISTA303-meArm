@@ -51,22 +51,22 @@ void moveGripper(int distToOpen) {
  * Chaoneng Quan
  */
 //
-//void moveRZ(int r, int z) {
-//  int a = 81;
-//  int b = 81;
-//  float lengthOfc = sqrt(sq(r) + sq(z));
-//  float angleOfC = acos( (sq(a) + sq(b) - sq(lengthOfc))/2*a*b ) * (2*PI/360);
-//  float angleOfB = (180 - angleOfC)/2;
-//  float angleOfK = atan(z/r) * (2*PI/360);
-//  float angleOfW = 180 - angleOfC - (angleOfB + angleOfK);
-//
-//  Serial.print("Angle W = ");
-//  Serial.println(angleOfW);
-//  moveLeft(angleOfW);
-//  Serial.print("Angle B+K = ");
-//  Serial.println(angleOfB + angleOfK);
-//  moveRight(angleOfB + angleOfK);
-//}
+void moveRZ(int r, int z) {
+  int a = 81;
+  int b = 81;
+  float lengthOfc = sqrt(sq(r) + sq(z));
+  float angleOfC = acos((sq(a) + sq(b) - sq(lengthOfc)) / (2*a*b)) * (2*PI/360);
+  float angleOfB = (180 - angleOfC)/2;
+  float angleOfK = atan(z/r) * (2*PI/360);
+  float angleOfW = 180 - angleOfC - (angleOfB + angleOfK);
+
+  Serial.print("Angle W = ");
+  Serial.println(angleOfW);
+  moveLeft(angleOfW);
+  Serial.print("Angle B+K = ");
+  Serial.println(angleOfB + angleOfK);
+  moveRight(angleOfB + angleOfK);
+}
 
 
 //// Move the arm along the r axis (polar coordinates), or in height (z)
