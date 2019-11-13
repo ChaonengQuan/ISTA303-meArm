@@ -186,4 +186,7 @@ void loop() {
   moveTheta(moveToTheta);
   moveRZ(moveToR, moveToZ);
   moveGripper(moveToGripper);
+
+    
+
 }
