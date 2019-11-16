@@ -28,6 +28,9 @@ int moveToGripper   = 0;
 // constants
 const int ARMLEN = 81; // arm is 81mm
 
+//debugging string
+char* calculations;
+
 /*
    Functions
 */
@@ -60,7 +63,7 @@ void moveRZ(int r, int z) {
   //Step 3: calculate angle of A/B
   float angleB = (180 - angleC) / 2;
   //Step 4: calculate angle of K
-  float angleK = atan(z / r) * (180 / PI);
+  float angleK = atan( (float) z / r) * (180 / PI);
   //Step 5: calculate angleBK and angleW
   float angleBK = angleB + angleK;
   float angleW = 180 - angleC - angleBK;
@@ -70,6 +73,9 @@ void moveRZ(int r, int z) {
 //  Serial.print("Angle B+K = ");
 //  Serial.println(angleB + angleK);
   moveRight(angleB + angleK);
+
+  sprintf(calculations, "side c: %d, angleC: %d, angleB: %d, angleK: %d, angleW: %d\n", (int) c, (int) angleC, (int) angleB, (int) angleK, (int) angleW);
+  Serial.print(calculations);
 }
 
 
@@ -103,6 +109,7 @@ void setup() {
   LEFT.attach(LEFT_PIN);
   MIDDLE.attach(MIDDLE_PIN);
 
+  calculations = malloc(sizeof(char) * 100);
 }
 
 // Display a simple serial console to the user that allows them to enter positional information for the MeArm to move to.
