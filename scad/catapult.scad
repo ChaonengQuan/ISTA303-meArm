@@ -23,6 +23,21 @@ module catapult_arm(arm_length = 50){
         cube([5,arm_length, thickness-backboard_thickness], center=true);
 }
 
+module basket(length=65, width=45, depth=10, wall_thickness=2) {
+    difference () {
+        cube ([length,width,depth+wall_thickness]); // outter
+        translate([wall_thickness, wall_thickness, wall_thickness])
+            cube([length-2*wall_thickness, width-2*wall_thickness, depth]);
+    }
+    //arm coupling
+    translate([length/2, -5, (thickness-backboard_thickness)/2])
+        difference() {
+            cube([thickness-backboard_thickness+5,10,10], center=true);
+            translate([0,-1,0])
+            cube([thickness-backboard_thickness+1,10,6], center=true);
+        }
+}
+
 module reverse_gear() {
     gear(mm_per_tooth, gear_teeth/3, (thickness - backboard_thickness), hole);
 }
@@ -112,7 +127,8 @@ module handle(handle_length = 30, handle_thickness = 5) {
     }
 }
 
-track();
+//track();
+basket();
 //rack();
 //catapult_arm();
 //reverse_gear();
