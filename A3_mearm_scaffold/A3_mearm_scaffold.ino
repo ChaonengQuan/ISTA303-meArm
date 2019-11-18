@@ -29,7 +29,7 @@ int moveToGripper   = 0;
 const int ARMLEN = 81; // arm is 81mm
 
 //debugging string
-char* calculations;
+char* calculations = new char[100];
 
 /*
    Functions
@@ -108,8 +108,6 @@ void setup() {
   RIGHT.attach(RIGHT_PIN);
   LEFT.attach(LEFT_PIN);
   MIDDLE.attach(MIDDLE_PIN);
-
-  calculations = malloc(sizeof(char) * 100);
 }
 
 // Display a simple serial console to the user that allows them to enter positional information for the MeArm to move to.
