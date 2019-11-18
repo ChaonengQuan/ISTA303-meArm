@@ -23,6 +23,8 @@ module catapult_arm(arm_length = 50){
         cube([5,arm_length, thickness-backboard_thickness], center=true);
 }
 
+catapult_arm();
+
 module basket(length=65, width=45, depth=10, wall_thickness=2) {
     difference () {
         cube ([length,width,depth+wall_thickness]); // outter
@@ -30,13 +32,15 @@ module basket(length=65, width=45, depth=10, wall_thickness=2) {
             cube([length-2*wall_thickness, width-2*wall_thickness, depth]);
     }
     //arm coupling
-    translate([length/2, -5, (thickness-backboard_thickness)/2])
+    translate([length/2, -5, (wall_thickness+depth)/2])
         difference() {
-            cube([thickness-backboard_thickness+5,10,10], center=true);
+            cube([thickness-backboard_thickness+5,10,depth+wall_thickness], center=true);
             translate([0,-1,0])
             cube([thickness-backboard_thickness+1,10,6], center=true);
         }
 }
+
+//basket();
 
 module reverse_gear() {
     gear(mm_per_tooth, gear_teeth/3, (thickness - backboard_thickness), hole);
@@ -91,7 +95,7 @@ module bracket() {
 module bracket_holes(dia=4.5) {
     translate([50,-6.5+dia/2,0]) // bottom hole
         cylinder(h=50,d=dia,center=true);
-    translate([49+26.4-dia,-27.5+dia/2,0]) // top hole
+    translate([49+29-dia,-27.5+dia/2,0]) // top hole
         cylinder(h=50,d=dia,center=true);
         //26.4-dia=x dist between holes
 }
@@ -117,7 +121,7 @@ module track () {
     track_base();
 }
 
-module handle(handle_length = 30, handle_thickness = 5) {
+module handle(handle_length = 40, handle_thickness = 5) {
     translate([0,4,leeway/2]) {
         rotate([270,0,30]) {
             cylinder(h=handle_length, d= handle_thickness); 
@@ -126,9 +130,3 @@ module handle(handle_length = 30, handle_thickness = 5) {
         }
     }
 }
-
-//track();
-basket();
-//rack();
-//catapult_arm();
-//reverse_gear();
