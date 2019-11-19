@@ -173,25 +173,46 @@ void moveRight(int angle) {
   RIGHT.write(angle - offset);
 }
 
-void loop() {
-  // Step 1: Display Serial console
-  doSerialConsole();
-  // Step 2: Debug display
-  Serial.println("");
-  Serial.println("Moving to: ");
-  Serial.print("Theta: ");
-  Serial.println(moveToTheta);
-  Serial.print("R: ");
-  Serial.println(moveToR);
-  Serial.print("Z: ");
-  Serial.println(moveToZ);
-  Serial.print("Gripper: ");
-  Serial.println(moveToGripper);
-  // Step 3: Move to requested location
-  moveTheta(moveToTheta);
-  moveRZ(moveToR, moveToZ);
-  moveGripper(moveToGripper);
+void moveTo(int theta, int r, int z, int gripper){
+  moveTheta(theta);
+  moveRZ(r,z);
+  moveGripper(gripper);
+  delay(1000);
+}
 
+void loop() {
+//  // Step 1: Display Serial console
+//  doSerialConsole();
+//  // Step 2: Debug display
+//  Serial.println("");
+//  Serial.println("Moving to: ");
+//  Serial.print("Theta: ");
+//  Serial.println(moveToTheta);
+//  Serial.print("R: ");
+//  Serial.println(moveToR);
+//  Serial.print("Z: ");
+//  Serial.println(moveToZ);
+//  Serial.print("Gripper: ");
+//  Serial.println(moveToGripper);
+//  // Step 3: Move to requested location
+//  moveTheta(moveToTheta);
+//  moveRZ(moveToR, moveToZ);
+//  moveGripper(moveToGripper);
+
+    moveTo(90,90,90,90);
+    moveTo(135,90,90,90);
+    moveTo(135,90,40,90);
+    moveTo(135,90,40,0);
+    moveTo(135,90,90,0);
+    moveTo(90,70,70,0);
+    moveTo(90,70,70,90);
+    moveTo(90,10,10,90);
+    moveTo(90,70,-10,90);
+    moveTo(90,170,0,90);
+    moveTo(90,50,-10,90);
+    moveTo(90,10,10,90);
+    moveTo(90,10,90,90);
+    delay(2000);
     
 
 }
